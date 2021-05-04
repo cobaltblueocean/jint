@@ -8,7 +8,7 @@ namespace Jint.Runtime.Interop
     /// <summary>
     /// Wraps a Clr method into a FunctionInstance
     /// </summary>
-    public sealed class ClrFunctionInstance : FunctionInstance, IEquatable<ClrFunctionInstance>
+    public sealed partial class ClrFunctionInstance : FunctionInstance, IEquatable<ClrFunctionInstance>
     {
         private readonly string _name;
         internal readonly Func<JsValue, JsValue[], JsValue> _func;

@@ -3,7 +3,7 @@ using Jint.Runtime.Descriptors;
 
 namespace Jint.Native.Function
 {
-    public sealed class ThrowTypeError : FunctionInstance
+    public sealed partial class ThrowTypeError : FunctionInstance
     {
         private static readonly JsString _functionName = new JsString("throwTypeError");
 

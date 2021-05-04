@@ -9,7 +9,7 @@ using Jint.Runtime.Interop;
 
 namespace Jint.Native.Date
 {
-    public sealed class DateConstructor : FunctionInstance, IConstructor
+    public sealed partial class DateConstructor : FunctionInstance, IConstructor
     {
         internal static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 

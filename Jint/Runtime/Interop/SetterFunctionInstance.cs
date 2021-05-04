@@ -7,7 +7,7 @@ namespace Jint.Runtime.Interop
     /// <summary>
     /// Represents a FunctionInstance wrapping a Clr setter.
     /// </summary>
-    public sealed class SetterFunctionInstance : FunctionInstance
+    public sealed partial class SetterFunctionInstance : FunctionInstance
     {
         private static readonly JsString _name = new JsString("set");
         private readonly Action<JsValue, JsValue> _setter;

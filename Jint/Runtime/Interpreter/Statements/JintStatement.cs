@@ -15,7 +15,7 @@ namespace Jint.Runtime.Interpreter.Statements
         }
     }
 
-    internal abstract class JintStatement
+    internal abstract partial class JintStatement
     {
         protected readonly Engine _engine;
         private readonly Statement _statement;

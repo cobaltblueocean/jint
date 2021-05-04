@@ -10,7 +10,7 @@ using Jint.Native.Symbol;
 
 namespace Jint.Runtime.Interpreter.Expressions
 {
-    internal abstract class JintExpression
+    internal abstract partial class JintExpression
     {
         // require sub-classes to set to false explicitly to skip virtual call
         protected bool _initialized = true;

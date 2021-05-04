@@ -4,7 +4,7 @@ using Jint.Runtime.Environments;
 
 namespace Jint.Runtime.Interpreter.Expressions
 {
-    internal sealed class JintFunctionExpression : JintExpression
+    internal sealed partial class JintFunctionExpression : JintExpression
     {
         private readonly JintFunctionDefinition _function;
 

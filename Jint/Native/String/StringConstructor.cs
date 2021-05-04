@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Jint.Collections;
 using Jint.Native.Array;
 using Jint.Native.Function;
@@ -12,7 +13,7 @@ using Jint.Runtime.Interpreter.Expressions;
 
 namespace Jint.Native.String
 {
-    public sealed class StringConstructor : FunctionInstance, IConstructor
+    public sealed partial class StringConstructor : FunctionInstance, IConstructor
     {
         private static readonly JsString _functionName = new JsString("String");
 

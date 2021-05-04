@@ -1,22 +1,22 @@
-using System.Collections.Generic;
 using Esprima.Ast;
 using Jint.Native;
 using Jint.Runtime.Environments;
 using Jint.Runtime.Interpreter.Expressions;
+using System.Collections.Generic;
 
 namespace Jint.Runtime.Interpreter.Statements
 {
     /// <summary>
     /// https://tc39.es/ecma262/#sec-forbodyevaluation
     /// </summary>
-    internal sealed class JintForStatement : JintStatement<ForStatement>
+    internal sealed partial class JintForStatement : JintStatement<ForStatement>
     {
         private JintVariableDeclaration _initStatement;
         private JintExpression _initExpression;
-        
+
         private JintExpression _test;
         private JintExpression _increment;
-        
+
         private JintStatement _body;
         private List<string> _boundNames;
 
@@ -35,7 +35,7 @@ namespace Jint.Runtime.Interpreter.Statements
             {
                 if (_statement.Init.Type == Nodes.VariableDeclaration)
                 {
-                    var d = (VariableDeclaration) _statement.Init;
+                    var d = (VariableDeclaration)_statement.Init;
                     if (d.Kind != VariableDeclarationKind.Var)
                     {
                         _boundNames = new List<string>();
@@ -46,7 +46,7 @@ namespace Jint.Runtime.Interpreter.Statements
                 }
                 else
                 {
-                    _initExpression = JintExpression.Build(_engine, (Expression) _statement.Init);
+                    _initExpression = JintExpression.Build(_engine, (Expression)_statement.Init);
                 }
             }
 
@@ -165,13 +165,13 @@ namespace Jint.Runtime.Interpreter.Statements
             {
                 return;
             }
-            
+
             var lastIterationEnv = _engine.ExecutionContext.LexicalEnvironment;
             var lastIterationEnvRec = lastIterationEnv._record;
             var outer = lastIterationEnv._outer;
             var thisIterationEnv = LexicalEnvironment.NewDeclarativeEnvironment(_engine, outer);
-            var thisIterationEnvRec = (DeclarativeEnvironmentRecord) thisIterationEnv._record;
-            
+            var thisIterationEnvRec = (DeclarativeEnvironmentRecord)thisIterationEnv._record;
+
             for (var j = 0; j < _boundNames.Count; j++)
             {
                 var bn = _boundNames[j];

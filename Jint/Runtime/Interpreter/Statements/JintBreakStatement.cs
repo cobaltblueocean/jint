@@ -5,7 +5,7 @@ namespace Jint.Runtime.Interpreter.Statements
     /// <summary>
     /// http://www.ecma-international.org/ecma-262/5.1/#sec-12.8
     /// </summary>
-    internal sealed class JintBreakStatement : JintStatement<BreakStatement>
+    internal sealed partial class JintBreakStatement : JintStatement<BreakStatement>
     {
         private readonly string _label;
 

@@ -7,7 +7,7 @@ using Jint.Runtime.Interpreter.Expressions;
 
 namespace Jint.Runtime.Interpreter.Statements
 {
-    internal sealed class JintSwitchBlock
+    internal sealed partial class JintSwitchBlock
     {
         private readonly Engine _engine;
         private readonly NodeList<SwitchCase> _switchBlock;

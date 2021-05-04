@@ -7,7 +7,7 @@ using Jint.Runtime.References;
 
 namespace Jint.Runtime.Interpreter.Expressions
 {
-    internal sealed class JintCallExpression : JintExpression
+    internal sealed partial class JintCallExpression : JintExpression
     {
         private CachedArgumentsHolder _cachedArguments;
         private bool _cached;
@@ -143,7 +143,7 @@ namespace Jint.Runtime.Interpreter.Expressions
                 }
                 else
                 {
-                    var env = (EnvironmentRecord) baseValue;
+                    var env = (EnvironmentRecord)baseValue;
                     thisObject = env.ImplicitThisValue();
                 }
 
@@ -193,7 +193,6 @@ namespace Jint.Runtime.Interpreter.Expressions
 
             return arguments;
         }
-
         private class CachedArgumentsHolder
         {
             internal JintExpression[] JintArguments;

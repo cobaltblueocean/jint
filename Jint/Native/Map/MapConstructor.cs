@@ -9,7 +9,7 @@ using Jint.Runtime.Interop;
 
 namespace Jint.Native.Map
 {
-    public sealed class MapConstructor : FunctionInstance, IConstructor
+    public sealed partial class MapConstructor : FunctionInstance, IConstructor
     {
         private static readonly JsString _functionName = new JsString("Map");
 

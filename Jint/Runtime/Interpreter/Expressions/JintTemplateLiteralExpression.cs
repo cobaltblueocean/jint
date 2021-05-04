@@ -4,7 +4,7 @@ using Jint.Pooling;
 
 namespace Jint.Runtime.Interpreter.Expressions
 {
-    internal sealed class JintTemplateLiteralExpression : JintExpression
+    internal sealed partial class JintTemplateLiteralExpression : JintExpression
     {
         internal readonly TemplateLiteral _templateLiteralExpression;
         internal JintExpression[] _expressions;

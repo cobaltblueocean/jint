@@ -13,7 +13,7 @@ namespace Jint.Runtime.Interpreter.Statements
     /// <summary>
     /// https://tc39.es/ecma262/#sec-for-in-and-for-of-statements
     /// </summary>
-    internal sealed class JintForInForOfStatement : JintStatement<Statement>
+    internal sealed partial class JintForInForOfStatement : JintStatement<Statement>
     {
         private readonly Node _leftNode;
         private readonly Statement _forBody;

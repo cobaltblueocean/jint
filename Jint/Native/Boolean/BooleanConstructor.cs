@@ -5,7 +5,7 @@ using Jint.Runtime.Descriptors;
 
 namespace Jint.Native.Boolean
 {
-    public sealed class BooleanConstructor : FunctionInstance, IConstructor
+    public sealed partial class BooleanConstructor : FunctionInstance, IConstructor
     {
         private static readonly JsString _functionName = new JsString("Boolean");
 
@@ -70,5 +70,6 @@ namespace Jint.Native.Boolean
 
             return instance;
         }
+
     }
 }

@@ -3,7 +3,7 @@ using Jint.Native;
 
 namespace Jint.Runtime.Interpreter.Expressions
 {
-    internal sealed class JintThisExpression : JintExpression
+    internal sealed partial class JintThisExpression : JintExpression
     {
         public JintThisExpression(Engine engine, ThisExpression expression) : base(engine, expression)
         {

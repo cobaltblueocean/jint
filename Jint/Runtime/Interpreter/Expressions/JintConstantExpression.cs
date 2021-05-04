@@ -6,7 +6,7 @@ namespace Jint.Runtime.Interpreter.Expressions
     /// <summary>
     /// Constant JsValue returning expression.
     /// </summary>
-    internal sealed class JintConstantExpression : JintExpression
+    internal sealed partial class JintConstantExpression : JintExpression
     {
         private readonly JsValue _value;
 

@@ -37,7 +37,7 @@ using Jint.Runtime.References;
 
 namespace Jint
 {
-    public class Engine
+    public partial class Engine
     {
         private static readonly ParserOptions DefaultParserOptions = new("<anonymous>")
         {
@@ -643,6 +643,7 @@ namespace Jint
             return result;
         }
 
+
         /// <summary>
         /// Gets a named value from the Global scope.
         /// </summary>
@@ -672,7 +673,7 @@ namespace Jint
             _referencePool.Return(reference);
             return jsValue;
         }
-        
+
         /// <summary>
         /// https://tc39.es/ecma262/#sec-resolvebinding
         /// </summary>

@@ -3,7 +3,7 @@ using Jint.Runtime.Interpreter.Expressions;
 
 namespace Jint.Runtime.Interpreter.Statements
 {
-    internal sealed class JintIfStatement : JintStatement<IfStatement>
+    internal sealed partial class JintIfStatement : JintStatement<IfStatement>
     {
         private readonly JintStatement _statementConsequent;
         private readonly JintExpression _test;

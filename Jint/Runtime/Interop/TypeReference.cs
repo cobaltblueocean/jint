@@ -12,7 +12,7 @@ using Jint.Runtime.Interop.Reflection;
 
 namespace Jint.Runtime.Interop
 {
-    public sealed class TypeReference : FunctionInstance, IConstructor, IObjectWrapper
+    public sealed partial class TypeReference : FunctionInstance, IConstructor, IObjectWrapper
     {
         private static readonly JsString _name = new JsString("typereference");
         private static readonly ConcurrentDictionary<Type, MethodDescriptor[]> _constructorCache = new();

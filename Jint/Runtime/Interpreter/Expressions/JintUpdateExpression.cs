@@ -5,7 +5,7 @@ using Jint.Runtime.References;
 
 namespace Jint.Runtime.Interpreter.Expressions
 {
-    internal sealed class JintUpdateExpression : JintExpression
+    internal sealed partial class JintUpdateExpression : JintExpression
     {
         private JintExpression _argument;
         private int _change;

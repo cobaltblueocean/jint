@@ -6,7 +6,7 @@ using Jint.Runtime.References;
 
 namespace Jint.Runtime.Interpreter.Statements
 {
-    internal sealed class JintVariableDeclaration : JintStatement<VariableDeclaration>
+    internal sealed partial class JintVariableDeclaration : JintStatement<VariableDeclaration>
     {
         private static readonly Completion VoidCompletion = new Completion(CompletionType.Normal, null, null, default);
 
@@ -112,14 +112,14 @@ namespace Jint.Runtime.Interpreter.Statements
                                  declaration.EvalOrArguments) is null)
                     {
                         // slow path
-                        var lhs = (Reference) declaration.Left.Evaluate();
+                        var lhs = (Reference)declaration.Left.Evaluate();
                         lhs.AssertValid(_engine);
 
                         var value = declaration.Init.GetValue().Clone();
 
                         if (declaration.Init._expression.IsFunctionWithName())
                         {
-                            ((FunctionInstance) value).SetFunctionName(lhs.GetReferencedName());
+                            ((FunctionInstance)value).SetFunctionName(lhs.GetReferencedName());
                         }
 
                         _engine.PutValue(lhs, value);

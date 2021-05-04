@@ -5,7 +5,7 @@ using Jint.Runtime.Descriptors;
 
 namespace Jint.Native.Error
 {
-    public sealed class ErrorConstructor : FunctionInstance, IConstructor
+    public sealed partial class ErrorConstructor : FunctionInstance, IConstructor
     {
         private JsString _name;
         private static readonly JsString _functionName = new JsString("Error");

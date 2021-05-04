@@ -10,7 +10,7 @@ using Jint.Runtime.References;
 
 namespace Jint.Runtime.Interpreter.Expressions
 {
-    internal sealed class BindingPatternAssignmentExpression : JintExpression
+    internal sealed partial class BindingPatternAssignmentExpression : JintExpression
     {
         private readonly BindingPattern _pattern;
         private JintExpression _right;

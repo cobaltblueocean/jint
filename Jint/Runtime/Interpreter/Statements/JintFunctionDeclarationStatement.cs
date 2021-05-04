@@ -1,8 +1,9 @@
 using Esprima.Ast;
+using System.Threading.Tasks;
 
 namespace Jint.Runtime.Interpreter.Statements
 {
-    internal sealed class JintFunctionDeclarationStatement : JintStatement<FunctionDeclaration>
+    internal sealed partial class JintFunctionDeclarationStatement : JintStatement<FunctionDeclaration>
     {
         public JintFunctionDeclarationStatement(Engine engine, FunctionDeclaration statement) : base(engine, statement)
         {

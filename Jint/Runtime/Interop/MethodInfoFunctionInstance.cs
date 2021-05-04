@@ -7,13 +7,13 @@ using Jint.Native.Function;
 
 namespace Jint.Runtime.Interop
 {
-    internal sealed class MethodInfoFunctionInstance : FunctionInstance
+    internal sealed partial class MethodInfoFunctionInstance : FunctionInstance
     {
         private static readonly JsString _name = new JsString("Function");
         private readonly MethodDescriptor[] _methods;
         private readonly ClrFunctionInstance _fallbackClrFunctionInstance;
 
-        public MethodInfoFunctionInstance(Engine engine, MethodDescriptor[] methods)
+        internal MethodInfoFunctionInstance(Engine engine, MethodDescriptor[] methods)
             : base(engine, _name)
         {
             _methods = methods;
@@ -110,7 +110,9 @@ namespace Jint.Runtime.Interop
                 // todo: cache method info
                 try
                 {
-                    return FromObject(Engine, method.Method.Invoke(thisObject.ToObject(), parameters));
+                    var result = method.Method.Invoke(thisObject.ToObject(), parameters).AwaitWhenAsyncResult();
+                    if (!result.IsCompleted) ExceptionHelper.ThrowError(_engine, "Cannot not await call to async method from a synchroneous context. The current async invocation is possibly executing synchroneously due to a missing code implementation on the async execution path (check call stack).");
+                    return FromObject(Engine, result.Result);
                 }
                 catch (TargetInvocationException exception)
                 {

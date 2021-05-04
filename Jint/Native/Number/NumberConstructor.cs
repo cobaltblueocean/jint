@@ -8,7 +8,7 @@ using Jint.Runtime.Interop;
 
 namespace Jint.Native.Number
 {
-    public sealed class NumberConstructor : FunctionInstance, IConstructor
+    public sealed partial class NumberConstructor : FunctionInstance, IConstructor
     {
         private static readonly JsString _functionName = new JsString("Number");
 

@@ -4,7 +4,7 @@ using Jint.Native.Iterator;
 
 namespace Jint.Runtime.Interpreter.Expressions
 {
-    internal sealed class JintSpreadExpression : JintExpression
+    internal sealed partial class JintSpreadExpression : JintExpression
     {
         private readonly JintExpression _argument;
         private readonly string _argumentName;

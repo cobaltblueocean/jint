@@ -11,7 +11,7 @@ using Jint.Runtime.Interop;
 
 namespace Jint.Native.RegExp
 {
-    public sealed class RegExpConstructor : FunctionInstance, IConstructor
+    public sealed partial class RegExpConstructor : FunctionInstance, IConstructor
     {
         private static readonly JsString _functionName = new JsString("RegExp");
 
@@ -170,7 +170,7 @@ namespace Jint.Native.RegExp
         {
             r.SetOwnProperty(RegExpInstance.PropertyLastIndex, new PropertyDescriptor(0, PropertyFlag.OnlyWritable));
         }
-        
+
         public RegExpPrototype PrototypeObject { get; private set; }
     }
 }

@@ -5,7 +5,7 @@ using Jint.Native.Iterator;
 
 namespace Jint.Runtime.Interpreter.Expressions
 {
-    internal sealed class JintArrayExpression : JintExpression
+    internal sealed partial class JintArrayExpression : JintExpression
     {
         private JintExpression[] _expressions;
         private bool _hasSpreads;
@@ -83,7 +83,7 @@ namespace Jint.Runtime.Interpreter.Expressions
 
             return a;
         }
-
+        
         private sealed class ArraySpreadProtocol : IteratorProtocol
         {
             private readonly ArrayInstance _instance;

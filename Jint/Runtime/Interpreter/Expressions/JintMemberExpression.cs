@@ -8,7 +8,7 @@ namespace Jint.Runtime.Interpreter.Expressions
     /// <summary>
     /// http://www.ecma-international.org/ecma-262/5.1/#sec-11.2.1
     /// </summary>
-    internal sealed class JintMemberExpression : JintExpression
+    internal sealed partial class JintMemberExpression : JintExpression
     {
         private MemberExpression _memberExpression;
         private JintExpression _objectExpression;

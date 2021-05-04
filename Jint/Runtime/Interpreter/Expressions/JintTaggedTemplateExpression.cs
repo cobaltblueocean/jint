@@ -5,7 +5,7 @@ using Jint.Runtime.Descriptors;
 
 namespace Jint.Runtime.Interpreter.Expressions
 {
-    internal sealed class JintTaggedTemplateExpression : JintExpression
+    internal sealed partial class JintTaggedTemplateExpression : JintExpression
     {
         internal static  readonly JsString PropertyRaw = new JsString("raw");
         

@@ -7,7 +7,7 @@ namespace Jint.Runtime.Interpreter.Statements
     /// <summary>
     /// http://www.ecma-international.org/ecma-262/5.1/#sec-12.10
     /// </summary>
-    internal sealed class JintWithStatement : JintStatement<WithStatement>
+    internal sealed partial class JintWithStatement : JintStatement<WithStatement>
     {
         private readonly JintStatement _body;
         private readonly JintExpression _object;

@@ -6,7 +6,7 @@ using Jint.Runtime.Interpreter.Statements;
 
 namespace Jint.Runtime.Interpreter
 {
-    internal class JintStatementList
+    internal partial class JintStatementList
     {
         private class Pair
         {

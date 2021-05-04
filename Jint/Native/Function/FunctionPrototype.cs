@@ -5,13 +5,14 @@ using Jint.Native.Symbol;
 using Jint.Runtime;
 using Jint.Runtime.Descriptors;
 using Jint.Runtime.Interop;
+using System.Threading.Tasks;
 
 namespace Jint.Native.Function
 {
     /// <summary>
     ///     http://www.ecma-international.org/ecma-262/5.1/#sec-15.3.4
     /// </summary>
-    public sealed class FunctionPrototype : FunctionInstance
+    public sealed partial class FunctionPrototype : FunctionInstance
     {
         private FunctionPrototype(Engine engine)
             : base(engine, JsString.Empty)

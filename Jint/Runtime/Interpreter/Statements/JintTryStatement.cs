@@ -6,7 +6,7 @@ namespace Jint.Runtime.Interpreter.Statements
     /// <summary>
     /// http://www.ecma-international.org/ecma-262/5.1/#sec-12.14
     /// </summary>
-    internal sealed class JintTryStatement : JintStatement<TryStatement>
+    internal sealed partial class JintTryStatement : JintStatement<TryStatement>
     {
         private readonly JintStatement _block;
         private readonly JintStatement _catch;

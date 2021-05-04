@@ -2,7 +2,7 @@ using Esprima.Ast;
 
 namespace Jint.Runtime.Interpreter.Statements
 {
-    internal sealed class JintScript : JintStatement<Script>
+    internal sealed partial class JintScript : JintStatement<Script>
     {
         private readonly JintStatementList _list;
 

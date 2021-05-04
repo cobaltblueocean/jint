@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
+using System.Threading.Tasks;
 using Jint.Native;
 using Jint.Native.Object;
 using Jint.Runtime.Descriptors;
@@ -14,7 +15,7 @@ namespace Jint.Runtime.Interop
     /// a new <see cref="NamespaceReference"/> as it assumes that the property is a deeper
     /// level of the current namespace
     /// </summary>
-    public class NamespaceReference : ObjectInstance, ICallable
+    public partial class NamespaceReference : ObjectInstance, ICallable
     {
         private readonly string _path;
 

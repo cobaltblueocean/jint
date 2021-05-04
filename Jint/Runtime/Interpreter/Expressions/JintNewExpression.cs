@@ -4,7 +4,7 @@ using Jint.Native;
 
 namespace Jint.Runtime.Interpreter.Expressions
 {
-    internal sealed class JintNewExpression : JintExpression
+    internal sealed partial class JintNewExpression : JintExpression
     {
         private JintExpression _calleeExpression;
         private JintExpression[] _jintArguments = Array.Empty<JintExpression>();

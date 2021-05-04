@@ -6,7 +6,7 @@ namespace Jint.Runtime.Interpreter.Statements
     /// <summary>
     /// http://www.ecma-international.org/ecma-262/5.1/#sec-12.11
     /// </summary>
-    internal sealed class JintSwitchStatement : JintStatement<SwitchStatement>
+    internal sealed partial class JintSwitchStatement : JintStatement<SwitchStatement>
     {
         private JintSwitchBlock _switchBlock;
         private JintExpression _discriminant;

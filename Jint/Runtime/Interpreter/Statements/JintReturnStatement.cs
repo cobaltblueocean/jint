@@ -7,7 +7,7 @@ namespace Jint.Runtime.Interpreter.Statements
     /// <summary>
     /// http://www.ecma-international.org/ecma-262/5.1/#sec-12.9
     /// </summary>
-    internal sealed class JintReturnStatement : JintStatement<ReturnStatement>
+    internal sealed partial class JintReturnStatement : JintStatement<ReturnStatement>
     {
         private readonly JintExpression _argument;
 

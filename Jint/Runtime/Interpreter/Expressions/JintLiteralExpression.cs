@@ -1,11 +1,12 @@
 using System;
+using System.Threading.Tasks;
 using Esprima;
 using Esprima.Ast;
 using Jint.Native;
 
 namespace Jint.Runtime.Interpreter.Expressions
 {
-    internal class JintLiteralExpression : JintExpression
+    internal partial class JintLiteralExpression : JintExpression
     {
         private JintLiteralExpression(Engine engine, Literal expression) : base(engine, expression)
         {

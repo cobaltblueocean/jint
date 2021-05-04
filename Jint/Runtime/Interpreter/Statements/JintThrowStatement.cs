@@ -6,7 +6,7 @@ namespace Jint.Runtime.Interpreter.Statements
     /// <summary>
     /// http://www.ecma-international.org/ecma-262/5.1/#sec-12.13
     /// </summary>
-    internal sealed class JintThrowStatement : JintStatement<ThrowStatement>
+    internal sealed partial class JintThrowStatement : JintStatement<ThrowStatement>
     {
         private JintExpression _argument;
 

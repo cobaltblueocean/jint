@@ -9,7 +9,7 @@ using Jint.Runtime.Interpreter;
 
 namespace Jint.Native.Function
 {
-    public sealed class ScriptFunctionInstance : FunctionInstance, IConstructor
+    public sealed partial class ScriptFunctionInstance : FunctionInstance, IConstructor
     {
         private bool _isClassConstructor;
 

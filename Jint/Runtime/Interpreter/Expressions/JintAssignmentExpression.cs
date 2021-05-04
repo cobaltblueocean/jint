@@ -6,7 +6,7 @@ using Jint.Runtime.References;
 
 namespace Jint.Runtime.Interpreter.Expressions
 {
-    internal sealed class JintAssignmentExpression : JintExpression
+    internal sealed partial class JintAssignmentExpression : JintExpression
     {
         private readonly JintExpression _left;
         private readonly JintExpression _right;
@@ -142,7 +142,7 @@ namespace Jint.Runtime.Interpreter.Expressions
             return lval;
         }
 
-        internal sealed class SimpleAssignmentExpression : JintExpression
+        internal sealed partial class SimpleAssignmentExpression : JintExpression
         {
             private JintExpression _left;
             private JintExpression _right;
@@ -188,11 +188,7 @@ namespace Jint.Runtime.Interpreter.Expressions
                 return rval;
             }
 
-            internal static JsValue AssignToIdentifier(
-                Engine engine,
-                JintIdentifierExpression left,
-                JintExpression right,
-                bool hasEvalOrArguments)
+            internal static JsValue AssignToIdentifier(Engine engine, JintIdentifierExpression left, JintExpression right, bool hasEvalOrArguments)
             {
                 var env = engine.ExecutionContext.LexicalEnvironment;
                 var strict = StrictModeScope.IsStrictModeCode;
@@ -212,7 +208,7 @@ namespace Jint.Runtime.Interpreter.Expressions
 
                     if (right._expression.IsFunctionWithName())
                     {
-                        ((FunctionInstance) rval).SetFunctionName(left._expressionName.StringValue);
+                        ((FunctionInstance)rval).SetFunctionName(left._expressionName.StringValue);
                     }
 
                     environmentRecord.SetMutableBinding(left._expressionName, rval, strict);

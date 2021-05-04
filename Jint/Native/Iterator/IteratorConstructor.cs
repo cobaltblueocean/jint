@@ -7,7 +7,7 @@ using Jint.Native.Set;
 
 namespace Jint.Native.Iterator
 {
-    public sealed class IteratorConstructor : FunctionInstance, IConstructor
+    public sealed partial class IteratorConstructor : FunctionInstance, IConstructor
     {
         private static readonly JsString _functionName = new JsString("iterator");
 

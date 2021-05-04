@@ -7,7 +7,7 @@ using Jint.Runtime.Interop;
 
 namespace Jint.Runtime.Interpreter.Expressions
 {
-    internal abstract class JintBinaryExpression : JintExpression
+    internal abstract partial class JintBinaryExpression : JintExpression
     {
         private readonly JintExpression _left;
         private readonly JintExpression _right;
@@ -111,6 +111,15 @@ namespace Jint.Runtime.Interpreter.Expressions
             return (JsValue) EvaluateInternal();
         }
 
+        protected override object EvaluateInternal()
+        {
+            var left = _left.GetValue();
+            var right = _right.GetValue();
+            return EvaluateBinaryExpression(left, right);
+        }
+
+        public abstract object EvaluateBinaryExpression(JsValue left, JsValue right);
+
         public static bool StrictlyEqual(JsValue x, JsValue y)
         {
             var typeX = x._type & ~InternalTypes.InternalFlags;
@@ -178,10 +187,8 @@ namespace Jint.Runtime.Interpreter.Expressions
             {
             }
 
-            protected override object EvaluateInternal()
+            public override object EvaluateBinaryExpression(JsValue left, JsValue right)
             {
-                var left = _left.GetValue();
-                var right = _right.GetValue();
                 var equal = StrictlyEqual(left, right);
                 return equal ? JsBoolean.True : JsBoolean.False;
             }
@@ -193,10 +200,8 @@ namespace Jint.Runtime.Interpreter.Expressions
             {
             }
 
-            protected override object EvaluateInternal()
+            public override object EvaluateBinaryExpression(JsValue left, JsValue right)
             {
-                var left = _left.GetValue();
-                var right = _right.GetValue();
                 return StrictlyEqual(left, right)
                     ? JsBoolean.False
                     : JsBoolean.True;
@@ -209,10 +214,8 @@ namespace Jint.Runtime.Interpreter.Expressions
             {
             }
 
-            protected override object EvaluateInternal()
+            public override object EvaluateBinaryExpression(JsValue left, JsValue right)
             {
-                var left = _left.GetValue();
-                var right = _right.GetValue();
                 var value = Compare(left, right);
 
                 return value._type == InternalTypes.Undefined
@@ -227,10 +230,8 @@ namespace Jint.Runtime.Interpreter.Expressions
             {
             }
 
-            protected override object EvaluateInternal()
+            public override object EvaluateBinaryExpression(JsValue left, JsValue right)
             {
-                var left = _left.GetValue();
-                var right = _right.GetValue();
                 var value = Compare(right, left, false);
 
                 return value._type == InternalTypes.Undefined
@@ -238,18 +239,15 @@ namespace Jint.Runtime.Interpreter.Expressions
                     : value;
             }
         }
-        
+
         private sealed class PlusBinaryExpression : JintBinaryExpression
         {
             public PlusBinaryExpression(Engine engine, BinaryExpression expression) : base(engine, expression)
             {
             }
 
-            protected override object EvaluateInternal()
+            public override object EvaluateBinaryExpression(JsValue left, JsValue right)
             {
-                var left = _left.GetValue();
-                var right = _right.GetValue();
-                
                 if (AreIntegerOperands(left, right))
                 {
                     return JsNumber.Create(left.AsInteger() + right.AsInteger());
@@ -258,21 +256,19 @@ namespace Jint.Runtime.Interpreter.Expressions
                 var lprim = TypeConverter.ToPrimitive(left);
                 var rprim = TypeConverter.ToPrimitive(right);
                 return lprim.IsString() || rprim.IsString()
-                    ? (JsValue) JsString.Create(TypeConverter.ToString(lprim) + TypeConverter.ToString(rprim))
+                    ? (JsValue)JsString.Create(TypeConverter.ToString(lprim) + TypeConverter.ToString(rprim))
                     : JsNumber.Create(TypeConverter.ToNumber(lprim) + TypeConverter.ToNumber(rprim));
             }
         }
+
         private sealed class MinusBinaryExpression : JintBinaryExpression
         {
             public MinusBinaryExpression(Engine engine, BinaryExpression expression) : base(engine, expression)
             {
             }
 
-            protected override object EvaluateInternal()
+            public override object EvaluateBinaryExpression(JsValue left, JsValue right)
             {
-                var left = _left.GetValue();
-                var right = _right.GetValue();
-                
                 return AreIntegerOperands(left, right)
                     ? JsNumber.Create(left.AsInteger() - right.AsInteger())
                     : JsNumber.Create(TypeConverter.ToNumber(left) - TypeConverter.ToNumber(right));
@@ -285,14 +281,11 @@ namespace Jint.Runtime.Interpreter.Expressions
             {
             }
 
-            protected override object EvaluateInternal()
+            public override object EvaluateBinaryExpression(JsValue left, JsValue right)
             {
-                var left = _left.GetValue();
-                var right = _right.GetValue();
-                
                 if (AreIntegerOperands(left, right))
                 {
-                    return JsNumber.Create((long) left.AsInteger() * right.AsInteger());
+                    return JsNumber.Create((long)left.AsInteger() * right.AsInteger());
                 }
 
                 if (left.IsUndefined() || right.IsUndefined())
@@ -310,11 +303,8 @@ namespace Jint.Runtime.Interpreter.Expressions
             {
             }
 
-            protected override object EvaluateInternal()
+            public override object EvaluateBinaryExpression(JsValue left, JsValue right)
             {
-                var left = _left.GetValue();
-                var right = _right.GetValue();
-
                 return Divide(left, right);
             }
         }
@@ -328,11 +318,8 @@ namespace Jint.Runtime.Interpreter.Expressions
                 _invert = invert;
             }
 
-            protected override object EvaluateInternal()
+            public override object EvaluateBinaryExpression(JsValue left, JsValue right)
             {
-                var left = _left.GetValue();
-                var right = _right.GetValue();
-
                 return Equal(left, right) == !_invert
                     ? JsBoolean.True
                     : JsBoolean.False;
@@ -348,16 +335,13 @@ namespace Jint.Runtime.Interpreter.Expressions
                 _leftFirst = leftFirst;
             }
 
-            protected override object EvaluateInternal()
+            public override object EvaluateBinaryExpression(JsValue leftValue, JsValue rightValue)
             {
-                var leftValue = _left.GetValue();
-                var rightValue = _right.GetValue();
-                
                 var left = _leftFirst ? leftValue : rightValue;
                 var right = _leftFirst ? rightValue : leftValue;
 
                 var value = Compare(left, right, _leftFirst);
-                return value.IsUndefined() || ((JsBoolean) value)._value
+                return value.IsUndefined() || ((JsBoolean)value)._value
                     ? JsBoolean.False
                     : JsBoolean.True;
             }
@@ -369,11 +353,8 @@ namespace Jint.Runtime.Interpreter.Expressions
             {
             }
 
-            protected override object EvaluateInternal()
+            public override object EvaluateBinaryExpression(JsValue left, JsValue right)
             {
-                var left = _left.GetValue();
-                var right = _right.GetValue();
-
                 if (!(right is FunctionInstance f))
                 {
                     return ExceptionHelper.ThrowTypeError<JsValue>(_engine, "instanceof can only be used with a function object");
@@ -389,25 +370,20 @@ namespace Jint.Runtime.Interpreter.Expressions
             {
             }
 
-            protected override object EvaluateInternal()
+            public override object EvaluateBinaryExpression(JsValue left, JsValue right)
             {
-                var left = _left.GetValue();
-                var right = _right.GetValue();
-
                 return JsNumber.Create(Math.Pow(TypeConverter.ToNumber(left), TypeConverter.ToNumber(right)));
             }
         }
+
         private sealed class InBinaryExpression : JintBinaryExpression
         {
             public InBinaryExpression(Engine engine, BinaryExpression expression) : base(engine, expression)
             {
             }
 
-            protected override object EvaluateInternal()
+            public override object EvaluateBinaryExpression(JsValue left, JsValue right)
             {
-                var left = _left.GetValue();
-                var right = _right.GetValue();
-
                 if (!(right is ObjectInstance oi))
                 {
                     return ExceptionHelper.ThrowTypeError<JsValue>(_engine, "in can only be used with an object");
@@ -423,11 +399,8 @@ namespace Jint.Runtime.Interpreter.Expressions
             {
             }
 
-            protected override object EvaluateInternal()
+            public override object EvaluateBinaryExpression(JsValue left, JsValue right)
             {
-                var left = _left.GetValue();
-                var right = _right.GetValue();
-
                 if (AreIntegerOperands(left, right))
                 {
                     var leftInteger = left.AsInteger();
@@ -443,7 +416,8 @@ namespace Jint.Runtime.Interpreter.Expressions
                     return Undefined.Instance;
                 }
 
-                return JsNumber.Create(TypeConverter.ToNumber(left) % TypeConverter.ToNumber(right));            }
+                return JsNumber.Create(TypeConverter.ToNumber(left) % TypeConverter.ToNumber(right));
+            }
         }
 
         private sealed class BitwiseBinaryExpression : JintBinaryExpression
@@ -455,16 +429,13 @@ namespace Jint.Runtime.Interpreter.Expressions
                 _operator = expression.Operator;
             }
 
-            protected override object EvaluateInternal()
+            public override object EvaluateBinaryExpression(JsValue left, JsValue right)
             {
-                var left = _left.GetValue();
-                var right = _right.GetValue();
-
                 if (AreIntegerOperands(left, right))
                 {
                     int leftValue = left.AsInteger();
                     int rightValue = right.AsInteger();
-                    
+
                     switch (_operator)
                     {
                         case BinaryOperator.BitwiseAnd:
@@ -479,20 +450,18 @@ namespace Jint.Runtime.Interpreter.Expressions
                                 JsNumber.Create(leftValue ^ rightValue);
 
                         case BinaryOperator.LeftShift:
-                            return JsNumber.Create(leftValue << (int) ((uint) rightValue & 0x1F));
+                            return JsNumber.Create(leftValue << (int)((uint)rightValue & 0x1F));
 
                         case BinaryOperator.RightShift:
-                            return JsNumber.Create(leftValue >> (int) ((uint) rightValue & 0x1F));
+                            return JsNumber.Create(leftValue >> (int)((uint)rightValue & 0x1F));
 
                         case BinaryOperator.UnsignedRightShift:
-                            return JsNumber.Create((uint) leftValue >> (int) ((uint) rightValue & 0x1F));
+                            return JsNumber.Create((uint)leftValue >> (int)((uint)rightValue & 0x1F));
                         default:
                             return ExceptionHelper.ThrowArgumentOutOfRangeException<object>(nameof(_operator),
                                 "unknown shift operator");
                     }
-  
                 }
-                
                 return EvaluateNonInteger(left, right);
             }
 

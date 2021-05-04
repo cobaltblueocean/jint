@@ -4,7 +4,7 @@ using Jint.Runtime.Environments;
 
 namespace Jint.Runtime.Interpreter.Statements
 {
-    internal sealed class JintBlockStatement : JintStatement<BlockStatement>
+    internal sealed partial class JintBlockStatement : JintStatement<BlockStatement>
     {
         private JintStatementList _statementList;
         private List<Declaration> _lexicalDeclarations;

@@ -12,7 +12,7 @@ using Jint.Runtime.Interop;
 
 namespace Jint.Native.Array
 {
-    public sealed class ArrayConstructor : FunctionInstance, IConstructor
+    public sealed partial class ArrayConstructor : FunctionInstance, IConstructor
     {
         private static readonly JsString _functionName = new JsString("Array");
 

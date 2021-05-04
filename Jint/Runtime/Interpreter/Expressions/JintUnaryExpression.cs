@@ -5,7 +5,7 @@ using Jint.Runtime.References;
 
 namespace Jint.Runtime.Interpreter.Expressions
 {
-    internal sealed class JintUnaryExpression : JintExpression
+    internal sealed partial class JintUnaryExpression : JintExpression
     {
         private readonly JintExpression _argument;
         private readonly UnaryOperator _operator;

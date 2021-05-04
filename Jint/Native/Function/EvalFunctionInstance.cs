@@ -7,7 +7,7 @@ using Jint.Runtime.Interpreter.Statements;
 
 namespace Jint.Native.Function
 {
-    public sealed class EvalFunctionInstance : FunctionInstance
+    public sealed partial class EvalFunctionInstance : FunctionInstance
     {
         private static readonly ParserOptions ParserOptions = new ParserOptions { AdaptRegexp = true, Tolerant = false };
         private static readonly JsString _functionName = new JsString("eval");

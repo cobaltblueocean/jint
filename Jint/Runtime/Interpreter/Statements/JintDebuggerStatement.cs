@@ -3,7 +3,7 @@ using Jint.Runtime.Debugger;
 
 namespace Jint.Runtime.Interpreter.Statements
 {
-    internal sealed class JintDebuggerStatement : JintStatement<DebuggerStatement>
+    internal sealed partial class JintDebuggerStatement : JintStatement<DebuggerStatement>
     {
         public JintDebuggerStatement(Engine engine, DebuggerStatement statement) : base(engine, statement)
         {

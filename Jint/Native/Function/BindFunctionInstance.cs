@@ -3,7 +3,7 @@ using Jint.Runtime;
 
 namespace Jint.Native.Function
 {
-    public sealed class BindFunctionInstance : FunctionInstance, IConstructor
+    public sealed partial class BindFunctionInstance : FunctionInstance, IConstructor
     {
         public BindFunctionInstance(Engine engine) 
             : base(engine, name: null, thisMode: FunctionThisMode.Strict)

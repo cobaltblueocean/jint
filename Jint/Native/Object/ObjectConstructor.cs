@@ -8,7 +8,7 @@ using Jint.Runtime.Interop;
 
 namespace Jint.Native.Object
 {
-    public sealed class ObjectConstructor : FunctionInstance, IConstructor
+    public sealed partial class ObjectConstructor : FunctionInstance, IConstructor
     {
         private static readonly JsString _name = new JsString("delegate");
 
@@ -479,7 +479,7 @@ namespace Jint.Native.Object
             return o.EnumerableOwnPropertyNames(EnumerableOwnPropertyNamesKind.Value);
         }
 
-        private sealed class CreateDataPropertyOnObject : ICallable
+        private sealed partial class CreateDataPropertyOnObject : ICallable
         {
             internal static readonly CreateDataPropertyOnObject Instance = new CreateDataPropertyOnObject();
 

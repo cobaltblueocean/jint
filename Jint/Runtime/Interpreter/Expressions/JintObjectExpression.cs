@@ -12,7 +12,7 @@ namespace Jint.Runtime.Interpreter.Expressions
     /// <summary>
     /// https://tc39.es/ecma262/#sec-object-initializer
     /// </summary>
-    internal sealed class JintObjectExpression : JintExpression
+    internal sealed partial class JintObjectExpression : JintExpression
     {
         private JintExpression[] _valueExpressions = System.Array.Empty<JintExpression>();
         private ObjectProperty?[] _properties = System.Array.Empty<ObjectProperty>();

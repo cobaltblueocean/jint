@@ -7,7 +7,7 @@ using Jint.Runtime.Interop;
 
 namespace Jint.Native.Proxy
 {
-    public sealed class ProxyConstructor : FunctionInstance, IConstructor
+    public sealed partial class ProxyConstructor : FunctionInstance, IConstructor
     {
         private static readonly JsString _name = new JsString("Proxy");
         private static readonly JsString PropertyProxy = new JsString("proxy");

@@ -2,7 +2,7 @@ using Esprima.Ast;
 
 namespace Jint.Runtime.Interpreter.Expressions
 {
-    internal sealed class JintConditionalExpression : JintExpression
+    internal sealed partial class JintConditionalExpression : JintExpression
     {
         private readonly JintExpression _test;
         private readonly JintExpression _consequent;
