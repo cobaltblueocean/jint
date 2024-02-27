@@ -80,7 +80,7 @@ namespace Jint.Native.Error
 
                 // If the current function is the ErrorConstructor itself (i.e. "throw new Error(...)" was called
                 // from script), exclude it from the stack trace, because the trace should begin at the throw point.
-                return callStack.BuildCallStackString(lastSyntaxNode.Location, currentFunction == this ? 1 : 0);
+                return callStack.BuildCallStackString(_engine, lastSyntaxNode.Location, currentFunction == this ? 1 : 0);
             }
         }
     }

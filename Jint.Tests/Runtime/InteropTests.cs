@@ -2,6 +2,8 @@
 using System.Globalization;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Text;
+using Esprima;
 using Jint.Native;
 using Jint.Native.Symbol;
 using Jint.Runtime;
@@ -11,6 +13,7 @@ using Jint.Tests.Runtime.Domain;
 using Jint.Tests.Runtime.TestClasses;
 using MongoDB.Bson;
 using Shapes;
+using SourceMaps;
 
 namespace Jint.Tests.Runtime
 {
@@ -3447,6 +3450,55 @@ try {
             Assert.Equal("String: test", result[1]);
             Assert.Equal("KeyValuePair`2: [test, val]", result[2]);
             Assert.Equal("String: test", result[3]);
+        }
+
+        [Fact]
+        public void ShouldReturnTheSourceMapStack()
+        {
+            var sourceMap = SourceMapParser.Parse("""{"version":3,"file":"custom.js","sourceRoot":"","sources":["custom.ts"],"names":[],"mappings":"AAEA,SAAS,CAAC,CAAC,CAAM;IAChB,MAAM,IAAI,KAAK,CAAC,CAAC,CAAC,CAAC;AACpB,CAAC;AAED,IAAI,CAAC,GAAG,UAAU,CAAM;IACvB,OAAO,CAAC,CAAC,CAAC,CAAC,CAAC;AACb,CAAC,CAAA;AAED,CAAC,CAAC,CAAC,CAAC,CAAC"}""");
+
+            string BuildCallStackHandler(string description, Location location, List<string> arguments)
+            {
+                if (location.Source != sourceMap.File) return null;
+
+                var originalPosition = sourceMap.OriginalPositionFor(location.End.Line, location.Start.Column + 1);
+
+                if (originalPosition is null) return null;
+
+                var str = $"   at{
+                    (!string.IsNullOrWhiteSpace(description) ? $" {description}" : "")
+                } {
+                    originalPosition.Value.OriginalFileName
+                }:{
+                    originalPosition.Value.OriginalLineNumber + 1
+                }:{
+                    originalPosition.Value.OriginalColumnNumber
+                }{
+                    Environment.NewLine
+                }";
+
+                return str;
+            }
+
+            var engine = new Engine(opt =>
+            {
+                opt.SetBuildCallStackHandler(BuildCallStackHandler);
+            });
+
+            const string script = @"function a(v) {
+    throw new Error(v);
+}
+var b = function (v) {
+    return a(v);
+};
+b(7);
+//# sourceMappingURL=custom.js.map";
+            var ex = Assert.Throws<JavaScriptException>(() => engine.Execute(script, "custom.js"));
+
+            var stack = ex.JavaScriptStackTrace!;
+            Assert.Equal(@"   at a custom.ts:4:7
+   at b custom.ts:8:9
+   at custom.ts:11:1".Replace("\r\n", "\n"), stack.Replace("\r\n", "\n"));
         }
     }
 }

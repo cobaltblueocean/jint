@@ -117,14 +117,29 @@ namespace Jint.Runtime.CallStack
             return string.Join("->", _stack.Select(static cse => cse.ToString()).Reverse());
         }
 
-        internal string BuildCallStackString(Location location, int excludeTop = 0)
+        internal string BuildCallStackString(Engine engine, Location location, int excludeTop = 0)
         {
             static void AppendLocation(
                 ref ValueStringBuilder sb,
                 string shortDescription,
                 in Location loc,
-                in CallStackElement? element)
+                in CallStackElement? element,
+                Engine engine)
             {
+                List<string>? arguments = null;
+
+                if (element?.Arguments is not null)
+                {
+                    arguments = element.Value.Arguments.Value.Select(GetPropertyKey).ToList();
+                }
+
+                var str = engine.Options.Interop.BuildCallStackHandler.Invoke(shortDescription, loc, arguments);
+                if (!string.IsNullOrEmpty(str))
+                {
+                    sb.Append(str);
+                    return;
+                }
+
                 sb.Append("   at");
 
                 if (!string.IsNullOrWhiteSpace(shortDescription))
@@ -133,19 +148,16 @@ namespace Jint.Runtime.CallStack
                     sb.Append(shortDescription);
                 }
 
-                if (element?.Arguments is not null)
+                if (arguments is not null)
                 {
-                    // it's a function
                     sb.Append(" (");
-                    for (var index = 0; index < element.Value.Arguments.Value.Count; index++)
+                    for (var index = 0; index < arguments.Count; index++)
                     {
                         if (index != 0)
                         {
                             sb.Append(", ");
                         }
-
-                        var arg = element.Value.Arguments.Value[index];
-                        sb.Append(GetPropertyKey(arg));
+                        sb.Append(arguments[index]);
                     }
                     sb.Append(')');
                 }
@@ -164,9 +176,9 @@ namespace Jint.Runtime.CallStack
             // stack is one frame behind function-wise when we start to process it from expression level
             var index = _stack._size - 1 - excludeTop;
             var element = index >= 0 ? _stack[index] : (CallStackElement?) null;
-            var shortDescription = element?.ToString() ?? "";
+            var shortDescription = element?.ToString() ?? string.Empty;
 
-            AppendLocation(ref builder, shortDescription, location, element);
+            AppendLocation(ref builder, shortDescription, location, element, engine);
 
             location = element?.Location ?? default;
             index--;
@@ -174,9 +186,9 @@ namespace Jint.Runtime.CallStack
             while (index >= -1)
             {
                 element = index >= 0 ? _stack[index] : null;
-                shortDescription = element?.ToString() ?? "";
+                shortDescription = element?.ToString() ?? string.Empty;
 
-                AppendLocation(ref builder, shortDescription, location, element);
+                AppendLocation(ref builder, shortDescription, location, element, engine);
 
                 location = element?.Location ?? default;
                 index--;
