@@ -8,7 +8,6 @@
     "Array.fromAsync",
     "async-iteration",
     "Atomics",
-    "generators",
     "import-assertions",
     "iterator-helpers",
     "regexp-duplicate-named-groups",
